@@ -162,6 +162,14 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
+  .glass-panel {
+    @apply bg-background/30 backdrop-blur-md border border-white/10 shadow-xl;
+  }
+
+  .text-overlay-glow {
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+  
   .gradient-primary {
     background: var(--gradient-primary);
   }

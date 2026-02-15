@@ -1,27 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, Target, Brain, TrendingUp, Sparkles, Settings, ChevronRight, User } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, Target, Brain, TrendingUp, Sparkles, GraduationCap, Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check if user is authenticated
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsAuthenticated(!!session);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const features = [
     {
@@ -46,162 +29,176 @@ const Index = () => {
     }
   ];
 
+  const benefits = [
+    "Comprehensive subject interest analysis",
+    "AI-driven career matching",
+    "Detailed career progression roadmaps",
+    "Academic performance evaluation",
+    "College recommendations tailored to you",
+    "From school to job guidance"
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border/40 bg-card/80 sticky top-0 z-50 backdrop-blur-xl">
-        <div className="container mx-auto px-6 py-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="h-7 w-7 text-foreground" />
-              <h1 className="text-[22px] font-semibold tracking-tight text-foreground">
-                Zertainity
-              </h1>
-            </div>
-            <div className="flex items-center gap-2">
-              {isAuthenticated ? (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate("/setup")}
-                  className="rounded-full px-5 font-medium"
-                >
-                  <User className="h-4 w-4 mr-2" />
-                  Account
-                </Button>
-              ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate("/auth")}
-                  className="rounded-full px-5 font-medium"
-                >
-                  Sign In
-                </Button>
-              )}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate("/admin")}
-                className="text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              >
-                <Settings className="h-5 w-5" />
-              </Button>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 font-sans">
+
+      {/* Header */}
+      <header className="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="h-6 w-6 text-indigo-600" />
+            <span className="text-xl font-bold text-gray-900">Zertainity</span>
+          </div>
+          <div className="flex gap-4">
+            <Button
+              variant="ghost"
+              onClick={() => navigate("/auth")}
+              className="text-gray-700 hover:text-gray-900"
+            >
+              Sign In
+            </Button>
+            <Button
+              onClick={() => navigate("/admin")}
+              variant="outline"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              Admin
+            </Button>
           </div>
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-gradient-hero">
-        <div className="container mx-auto px-6 py-32 relative z-10">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-6xl font-semibold leading-[1.1] tracking-tight text-foreground">
-              Discover Your
-              <span className="block mt-2">Perfect Career Path</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              AI-powered platform to guide students from school to their dream career with personalized recommendations and detailed pathways
-            </p>
-            <div className="flex gap-4 pt-6 justify-center">
-              <Button
-                variant="default"
-                size="lg"
-                onClick={() => navigate("/education-level")}
-                className="text-base px-8 h-12 rounded-full font-medium shadow-premium hover:shadow-glow"
-              >
-                Start Your Journey
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => navigate("/careers")}
-                className="text-base px-8 h-12 rounded-full font-medium border-border/60 hover:bg-muted/50"
-              >
-                Explore Careers
-              </Button>
-            </div>
+      {/* Hero Section */}
+      <section className="container mx-auto px-6 py-20 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            Discover Your<br />
+            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Perfect Career Path
+            </span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+            AI-powered platform to guide students from school to their dream career with personalized recommendations and detailed pathways
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => navigate("/education-level")}
+              size="lg"
+              className="bg-gray-900 hover:bg-gray-800 text-white rounded-full px-8 h-14 text-lg shadow-lg hover:shadow-xl transition-all"
+            >
+              Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button
+              onClick={() => navigate("/careers")}
+              size="lg"
+              variant="outline"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full px-8 h-14 text-lg"
+            >
+              Explore Careers
+            </Button>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      <section className="py-24 bg-muted/20">
+      {/* How It Works */}
+      <section className="bg-white py-20">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h3 className="text-4xl font-semibold tracking-tight mb-4 text-foreground">How It Works</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg font-light">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               Our intelligent platform guides you through a comprehensive assessment to unlock your potential
             </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="shadow-card hover:shadow-premium transition-smooth border border-border/40 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-foreground/5 flex items-center justify-center">
-                    <feature.icon className="h-6 w-6 text-foreground" />
-                  </div>
-                  <CardTitle className="text-lg font-semibold">{feature.title}</CardTitle>
-                  <CardDescription className="text-base font-light leading-relaxed">
-                    {feature.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center p-6 rounded-2xl hover:bg-gray-50 transition-colors"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+                  <feature.icon className="h-8 w-8 text-indigo-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-24">
+      {/* Why Choose Zertainity */}
+      <section className="py-20 bg-gradient-to-br from-indigo-50 to-purple-50">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="shadow-card lg:col-span-2 border border-border/40">
-              <CardHeader>
-                <CardTitle className="text-2xl font-semibold">Why Choose Zertainity?</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    "Comprehensive subject interest analysis",
-                    "Academic performance evaluation",
-                    "AI-driven career matching",
-                    "College recommendations tailored to you",
-                    "Detailed career progression roadmaps",
-                    "From school to job guidance"
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-foreground flex-shrink-0 mt-2" />
-                      <span className="text-sm font-light leading-relaxed">{item}</span>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">Why Choose Zertainity?</h2>
+              <div className="space-y-4">
+                {benefits.map((benefit, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="flex items-start gap-3"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    <span className="text-gray-700 text-lg">{benefit}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
 
-            <Card className="shadow-card bg-foreground border-0">
-              <CardHeader>
-                <CardTitle className="text-background">Ready to Begin?</CardTitle>
-                <CardDescription className="text-background/70 font-light">
-                  Take the first step towards your future
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={() => navigate("/quiz")}
-                  className="w-full rounded-full h-12 font-medium"
-                >
-                  Take the Quiz
-                </Button>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-gray-900 rounded-3xl p-10 text-white shadow-2xl"
+            >
+              <h3 className="text-3xl font-bold mb-4">Ready to Begin?</h3>
+              <p className="text-gray-300 mb-8 text-lg">
+                Take the first step towards your future
+              </p>
+              <Button
+                onClick={() => navigate("/education-level")}
+                size="lg"
+                className="w-full bg-white text-gray-900 hover:bg-gray-100 rounded-full h-14 text-lg font-semibold"
+              >
+                Take the Quiz
+              </Button>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      <footer className="border-t border-border/40 bg-background py-12">
-        <div className="container mx-auto px-6 text-center text-muted-foreground">
-          <p className="text-sm font-light">© 2025 Zertainity. Empowering students to find their path.</p>
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 py-8">
+        <div className="container mx-auto px-6 text-center text-gray-600">
+          <p>© 2025 Zertainity. Empowering students to find their path.</p>
         </div>
       </footer>
     </div>

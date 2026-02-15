@@ -1,237 +1,270 @@
-import { useLocation, useNavigate, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, ArrowLeft, Sparkles, TrendingUp } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, CheckCircle, TrendingUp, Sparkles, Home, MapPin, GraduationCap } from "lucide-react";
+import { motion } from "framer-motion";
+import { generateRecommendations } from "@/services/ai";
+
+interface College {
+  name: string;
+  location: string;
+  cutoff: string;
+}
+
+interface CourseRecommendation {
+  courseName: string;
+  stream: string;
+  match: number;
+  description: string;
+  whyGreat: string[];
+  colleges: College[];
+  careerOptions: string[];
+}
 
 const Results = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const { educationLevel, class9Marks, class10Marks, class11Subjects, class12Subjects, interests } = location.state || {};
+  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+  const [strengths, setStrengths] = useState("");
+  const [recommendations, setRecommendations] = useState<CourseRecommendation[]>([]);
 
-  if (!educationLevel) {
-    return <Navigate to="/education-level" replace />;
+  useEffect(() => {
+    const loadResults = async () => {
+      try {
+        const {
+          answers,
+          educationLevel,
+          class9Marks,
+          class10Marks,
+          class11Subjects,
+          class12Subjects,
+          interests
+        } = location.state || {};
+
+        // Generate AI recommendations
+        const aiRecommendations = await generateRecommendations(
+          educationLevel || 'General',
+          interests || '',
+          {
+            class9Marks,
+            class10Marks,
+            class11Subjects,
+            class12Subjects
+          },
+          answers || {}
+        );
+
+        setStrengths(aiRecommendations.strengths);
+        setRecommendations(aiRecommendations.recommendedCourses);
+
+        // Save to database
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await supabase.from('user_results').upsert({
+            user_id: user.id,
+            archetype: 'ANALYZED',
+            top_careers: {
+              strengths: aiRecommendations.strengths,
+              recommendations: aiRecommendations.recommendedCourses,
+              timestamp: new Date().toISOString()
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error loading results:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadResults();
+  }, [location.state]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <Sparkles className="h-10 w-10 animate-pulse text-indigo-600 mx-auto" />
+          <p className="text-gray-600">AI is analyzing your profile and generating recommendations...</p>
+        </div>
+      </div>
+    );
   }
 
-  // Mock AI-generated strengths analysis
-  const strengths = educationLevel === 'after-10th' 
-    ? "The student exhibits strong foundational skills across core subjects, with particularly notable performance in Mathematics and Science. Their expressed interests in technology and problem-solving align well with analytical and computational fields. The combination of academic performance and stated passions indicates a natural aptitude for systematic thinking and creative problem-solving."
-    : "The student exhibits exceptional academic performance across all subjects, particularly in English, Mathematics, and Science, indicating strong analytical and problem-solving abilities. Their stated interest in technology and cybersecurity is well-supported by their responses, which highlight a preference for software design, algorithmic thinking, and a foundational understanding of logic gates. While showing a desire for structured learning and deep mastery, their inclination towards creative problem-solving and contributing to cutting-edge research suggests a strong alignment between their interests and aptitudes for STEM fields, especially those involving computing and engineering.";
-
-  // Mock recommended career paths
-  const recommendations = educationLevel === 'after-10th' ? [
-    {
-      stream: "Science (PCM with Computer Science)",
-      category: "Core Technology & Engineering",
-      match: 95,
-      description: "This stream directly aligns with strong performance in Math and Science, coupled with interests in technology. It provides a robust foundation for pursuing higher education in computer science, software engineering, or related fields.",
-      reasons: [
-        "Strong performance in Mathematics and Science",
-        "Stated interest in technology and problem-solving",
-        "Excellent foundation for engineering and technical careers",
-        "Opens doors to IITs, NITs, and top engineering colleges"
-      ],
-      careers: [
-        "Software Engineer",
-        "Data Scientist",
-        "AI/ML Engineer",
-        "Computer Hardware Engineer",
-        "Research Scientist"
-      ]
-    },
-    {
-      stream: "Science (PCB with Mathematics)",
-      category: "Medical & Life Sciences",
-      match: 85,
-      description: "Strong Science fundamentals combined with mathematical aptitude create excellent preparation for medical sciences and biological research careers.",
-      reasons: [
-        "Excellent Science performance with analytical skills",
-        "Mathematical foundation supports advanced medical studies",
-        "Opens pathways to MBBS, BDS, and healthcare careers",
-        "Research opportunities in biotechnology and pharmacology"
-      ],
-      careers: [
-        "Doctor (MBBS)",
-        "Dentist",
-        "Biotechnologist",
-        "Pharmacologist",
-        "Medical Researcher"
-      ]
-    },
-    {
-      stream: "Commerce with Mathematics",
-      category: "Business & Finance",
-      match: 75,
-      description: "Mathematical aptitude can be leveraged in commerce stream for careers in finance, accounting, and business analytics.",
-      reasons: [
-        "Strong mathematical foundation supports quantitative analysis",
-        "Opens doors to CA, CS, and business management",
-        "Growing demand for financial analysts and business strategists",
-        "Entrepreneurship opportunities"
-      ],
-      careers: [
-        "Chartered Accountant",
-        "Financial Analyst",
-        "Business Analyst",
-        "Investment Banker",
-        "Management Consultant"
-      ]
-    }
-  ] : [
-    {
-      stream: "Science (PCM with Computer Science)",
-      category: "Core Technology & Engineering",
-      match: 95,
-      description: "This stream directly aligns with the student's strong academic performance in Math and Science, coupled with their explicit interest in technology and cybersecurity, particularly software design and algorithms. It provides a robust foundation for pursuing higher education in computer science, software engineering, or related fields, preparing them for roles involving innovation and research.",
-      reasons: [
-        "Exceptional performance in Mathematics and Science, crucial for this stream",
-        "Stated interest in designing new software, developing algorithms, and coding solutions",
-        "Preference for learning new programming languages and contributing to cutting-edge research",
-        "Direct alignment with their preferred subject combination for 11th-12th grade: Physics, Chemistry, Mathematics, Computer Science"
-      ],
-      careers: [
-        "Software Engineer",
-        "Cybersecurity Analyst (with further specialization)",
-        "Data Scientist",
-        "AI/ML Engineer",
-        "Computer Hardware Engineer"
-      ]
-    },
-    {
-      stream: "Science (PCM with Electronics)",
-      category: "Hardware & Systems Engineering",
-      match: 88,
-      description: "Given the student's interest in 'logic gates and circuit design' and their strong aptitude in Physics and Mathematics, this stream offers an excellent pathway. It allows for a deeper dive into the foundational hardware aspects of technology, which are integral to both computing and cybersecurity infrastructure, while still leveraging their problem-solving skills.",
-      reasons: [
-        "Strong performance in Physics and Mathematics, essential for electronics",
-        "Specific interest in 'logic gates and circuit design' indicates an aptitude for hardware",
-        "Provides a complementary understanding to software, crucial for a holistic view of technology",
-        "Offers a different avenue for contributing to cutting-edge advancements beyond pure software"
-      ],
-      careers: [
-        "Electronics Engineer",
-        "Embedded Systems Engineer",
-        "VLSI Design Engineer",
-        "Robotics Engineer",
-        "Network Hardware Engineer"
-      ]
-    },
-    {
-      stream: "Science (PCMB / with Biotechnology)",
-      category: "Interdisciplinary Technology & Research",
-      match: 75,
-      description: "While not directly stated, the student's high performance in Science and interest in 'cutting-edge research' could be channeled into interdisciplinary fields like Bioinformatics or Computational Biology. This stream combines strong analytical skills with biological knowledge, opening doors to advanced research roles where technology is applied to solve complex biological problems.",
-      reasons: [
-        "Excellent performance in Science, providing a strong foundation for biology",
-        "Interest in 'cutting-edge research and advancements' could extend to interdisciplinary fields",
-        "High academic aptitude suggests an ability to master diverse scientific concepts",
-        "Offers a unique application of technology and algorithmic thinking in a different scientific domain"
-      ],
-      careers: [
-        "Bioinformatician",
-        "Computational Biologist",
-        "Biomedical Engineer (with software/hardware focus)",
-        "Biotechnology Researcher",
-        "Pharmaceutical Data Scientist"
-      ]
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card shadow-card">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2">
-              <GraduationCap className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                Assessment Complete
-              </h1>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 font-sans">
+
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 py-8">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-700 border border-green-200 text-sm font-semibold mb-4">
+              <CheckCircle className="h-4 w-4" /> Assessment Complete
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Your Personalized Career Path</h1>
+            <p className="text-gray-600 text-lg">Based on your academic performance and assessment responses, here are our AI-powered recommendations</p>
+          </motion.div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-12 max-w-5xl">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-2">Your Personalized Career Path</h2>
-          <p className="text-muted-foreground">
-            Based on your academic performance and assessment responses, here are our recommendations
-          </p>
-        </div>
+      <div className="container mx-auto px-6 py-12 max-w-6xl">
 
-        <Card className="shadow-card mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
+        {/* Strengths Summary */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-12"
+        >
+          <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="h-6 w-6 text-indigo-600" />
               Your Strengths
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground leading-relaxed">{strengths}</p>
-          </CardContent>
-        </Card>
+            </h2>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              {strengths}
+            </p>
+          </div>
+        </motion.div>
 
-        <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-6">Recommended Career Paths</h3>
+        {/* Recommended Courses */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Recommended Courses & Colleges</h2>
+
           <div className="space-y-6">
-            {recommendations.map((rec, index) => (
-              <Card key={index} className="shadow-card border-2 hover:border-primary/50 transition-smooth">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <CardTitle className="text-xl mb-1">{rec.stream}</CardTitle>
-                      <CardDescription className="text-base">{rec.category}</CardDescription>
+            {recommendations.map((course, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: (index + 2) * 0.1 }}
+                className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
+              >
+                {/* Header */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-1">{course.courseName}</h3>
+                    <p className="text-indigo-600 font-medium">{course.stream}</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-5xl font-bold text-gray-900">{course.match}%</div>
+                      <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Match</div>
                     </div>
-                    <Badge className="bg-gradient-primary text-lg px-4 py-1">{rec.match}% Match</Badge>
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground">{rec.description}</p>
-                  
-                  <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-primary" />
-                      Why this is great for you:
-                    </h4>
-                    <ul className="space-y-1 ml-6">
-                      {rec.reasons.map((reason, idx) => (
-                        <li key={idx} className="text-sm text-muted-foreground list-disc">{reason}</li>
-                      ))}
-                    </ul>
-                  </div>
+                </div>
 
-                  <div>
-                    <h4 className="font-semibold mb-2">Career Options:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {rec.careers.map((career, idx) => (
-                        <Badge key={idx} variant="secondary">{career}</Badge>
-                      ))}
-                    </div>
+                {/* Match Progress */}
+                <Progress value={course.match} className="h-2 mb-6 bg-gray-200" />
+
+                {/* Description */}
+                <p className="text-gray-700 leading-relaxed mb-6 text-lg">
+                  {course.description}
+                </p>
+
+                {/* Why This is Great */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold mb-3 text-indigo-600">Why this is great for you:</h4>
+                  <ul className="space-y-2">
+                    {course.whyGreat.map((reason, i) => (
+                      <li key={i} className="flex items-start gap-3 text-gray-700">
+                        <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{reason}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Best Colleges */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold mb-3 text-gray-900 flex items-center gap-2">
+                    <GraduationCap className="h-5 w-5 text-indigo-600" />
+                    Best Colleges for This Course:
+                  </h4>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {course.colleges.map((college, i) => (
+                      <div
+                        key={i}
+                        className="p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100"
+                      >
+                        <h5 className="font-bold text-gray-900 mb-1">{college.name}</h5>
+                        <p className="text-sm text-gray-600 flex items-center gap-1 mb-2">
+                          <MapPin className="h-3 w-3" />
+                          {college.location}
+                        </p>
+                        <p className="text-xs text-indigo-700 font-medium">
+                          Cutoff: {college.cutoff}
+                        </p>
+                      </div>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+
+                {/* Career Options */}
+                <div>
+                  <h4 className="text-lg font-semibold mb-3 text-gray-900">Career Options:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {course.careerOptions.map((career, i) => (
+                      <span
+                        key={i}
+                        className="px-4 py-2 rounded-full bg-gray-100 border border-gray-200 text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+                      >
+                        {career}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        <Card className="shadow-card bg-gradient-primary text-center">
-          <CardHeader>
-            <CardTitle className="text-primary-foreground text-2xl">Ready to Start Your Journey?</CardTitle>
-            <CardDescription className="text-primary-foreground/80">
-              Take the next step towards your future. Research these paths and talk to your teachers and counselors.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button variant="secondary" size="lg" onClick={() => navigate("/")}>
-              Back to Home
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-center"
+        >
+          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-10 border border-indigo-100">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Ready to Start Your Journey?</h3>
+            <p className="text-gray-700 text-lg mb-8 max-w-2xl mx-auto">
+              Research these colleges and courses. Talk to your teachers and counselors to make an informed decision.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                onClick={() => navigate("/careers")}
+                size="lg"
+                className="bg-gray-900 hover:bg-gray-800 text-white rounded-full px-8 h-14 text-lg"
+              >
+                Explore More Careers
+              </Button>
+              <Button
+                onClick={() => navigate("/pathways")}
+                size="lg"
+                variant="outline"
+                className="border-gray-300 text-gray-700 hover:bg-white rounded-full px-8 h-14 text-lg"
+              >
+                View Career Roadmaps
+              </Button>
+            </div>
+            <Button
+              onClick={() => navigate("/")}
+              variant="ghost"
+              className="mt-6 text-gray-600 hover:text-gray-900"
+            >
+              <Home className="mr-2 h-4 w-4" /> Back to Home
             </Button>
-          </CardContent>
-        </Card>
-      </main>
+          </div>
+        </motion.div>
+
+      </div>
     </div>
   );
 };
