@@ -14,6 +14,7 @@ export interface UserCSVRow {
 /**
  * Convert array of objects to CSV string
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function arrayToCSV<T extends Record<string, any>>(data: T[]): string {
     if (data.length === 0) return '';
 
@@ -36,6 +37,7 @@ export function arrayToCSV<T extends Record<string, any>>(data: T[]): string {
 /**
  * Parse CSV string to array of objects
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function csvToArray<T = any>(csv: string): T[] {
     const lines = csv.split('\n').filter(line => line.trim());
     if (lines.length === 0) return [];
@@ -46,11 +48,11 @@ export function csvToArray<T = any>(csv: string): T[] {
     for (let i = 1; i < lines.length; i++) {
         const values = parseCSVLine(lines[i]);
         if (values.length === headers.length) {
-            const row: any = {};
+            const row: Record<string, string> = {};
             headers.forEach((header, index) => {
                 row[header] = values[index];
             });
-            rows.push(row);
+            rows.push(row as unknown as T);
         }
     }
 

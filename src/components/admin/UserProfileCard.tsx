@@ -54,22 +54,22 @@ export function UserProfileCard({
   const isUpdating = updatingRole === user.id;
 
   useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await supabase
+          .from("user_profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        if (data) setProfile(data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
     fetchProfile();
   }, [user.id]);
-
-  const fetchProfile = async () => {
-    try {
-      const { data } = await supabase
-        .from("user_profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-      
-      if (data) setProfile(data);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  };
 
   const roleConfig = {
     owner: { icon: Crown, label: 'Owner', class: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800' },
@@ -90,7 +90,7 @@ export function UserProfileCard({
           <AvatarImage src={profile?.avatar_url || undefined} alt={user.email} />
           <AvatarFallback className="text-lg">{getInitials(user.email)}</AvatarFallback>
         </Avatar>
-        
+
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <h3 className="font-semibold text-lg truncate">{user.email}</h3>
@@ -104,7 +104,7 @@ export function UserProfileCard({
               </Badge>
             )}
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground mb-3">
             <div className="flex items-center gap-1">
               <Mail className="h-3 w-3" />
@@ -141,7 +141,7 @@ export function UserProfileCard({
             {user.roles.map((role) => {
               const config = roleConfig[role as keyof typeof roleConfig] || roleConfig.user;
               const Icon = config.icon;
-              
+
               return (
                 <Badge key={role} variant="outline" className={config.class}>
                   <Icon className="h-3 w-3 mr-1" />
@@ -189,7 +189,7 @@ export function UserProfileCard({
                     <AlertDialogHeader>
                       <AlertDialogTitle>Suspend User</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Are you sure you want to suspend <strong>{user.email}</strong>? 
+                        Are you sure you want to suspend <strong>{user.email}</strong>?
                         They will not be able to access the platform until unsuspended.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
@@ -228,7 +228,7 @@ export function UserProfileCard({
                     <AlertDialogHeader>
                       <AlertDialogTitle>Delete User</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Are you sure you want to permanently delete <strong>{user.email}</strong>? 
+                        Are you sure you want to permanently delete <strong>{user.email}</strong>?
                         This action cannot be undone and will remove all user data.
                       </AlertDialogDescription>
                     </AlertDialogHeader>

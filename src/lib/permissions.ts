@@ -25,9 +25,9 @@ export async function hasPermission(permission: Permission): Promise<boolean> {
         if (!user) return false;
 
         const { data, error } = await supabase.rpc('has_permission', {
-            check_user_id: user.id,
-            check_permission: permission
-        });
+            _user_id: user.id,
+            _permission: permission
+        } as any);
 
         if (error) throw error;
         return data || false;
@@ -82,7 +82,7 @@ export async function getCurrentUserRole(): Promise<Role | null> {
 /**
  * Log user activity
  */
-export async function logActivity(action: string, details?: Record<string, any>) {
+export async function logActivity(action: string, details?: Record<string, unknown>) {
     try {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
@@ -90,7 +90,9 @@ export async function logActivity(action: string, details?: Record<string, any>)
         await supabase.rpc('log_user_activity', {
             p_user_id: user.id,
             p_action: action,
-            p_details: details || null
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+            p_details: (details as any) || null
         });
     } catch (error) {
         console.error('Activity logging failed:', error);

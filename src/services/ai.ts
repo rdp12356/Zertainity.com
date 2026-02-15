@@ -38,10 +38,12 @@ export const generateQuizQuestions = async (
     let apiKey = "";
     try {
         const { data } = await supabase
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .from('admin_settings' as any)
             .select('value')
             .eq('key', 'OPENROUTER_API_KEY')
             .maybeSingle();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (data) apiKey = (data as any).value;
     } catch (e) {
         console.warn("Could not fetch API key");
@@ -169,6 +171,7 @@ export const generateRecommendations = async (
         class11Subjects?: SubjectMarks[];
         class12Subjects?: SubjectMarks[];
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     aptitudeAnswers: Record<number, any>
 ) => {
     console.log("Generating recommendations for:", educationLevel, interests, marksData, aptitudeAnswers);
@@ -188,10 +191,12 @@ export const generateRecommendations = async (
     let apiKey = "";
     try {
         const { data } = await supabase
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .from('admin_settings' as any)
             .select('value')
             .eq('key', 'OPENROUTER_API_KEY')
             .maybeSingle();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (data) apiKey = (data as any).value;
     } catch (e) {
         console.warn("Could not fetch API key");

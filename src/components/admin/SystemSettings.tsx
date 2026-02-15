@@ -23,11 +23,13 @@ export const SystemSettings = ({ role }: SystemSettingsProps) => {
       if (role !== 'owner') return;
       try {
         const { data, error } = await supabase
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .from('admin_settings' as any)
           .select('value')
           .eq('key', 'OPENROUTER_API_KEY')
           .maybeSingle();
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (data) setApiKey((data as any).value);
       } catch (err) {
         console.error("Error fetching settings:", err);
@@ -42,6 +44,7 @@ export const SystemSettings = ({ role }: SystemSettingsProps) => {
       if (!apiKey.trim()) throw new Error("API Key cannot be empty");
 
       const { error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('admin_settings' as any)
         .upsert({
           key: 'OPENROUTER_API_KEY',
@@ -55,10 +58,11 @@ export const SystemSettings = ({ role }: SystemSettingsProps) => {
         title: "Settings Saved",
         description: "OpenRouter API Key has been updated securely.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "An error occurred";
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     } finally {

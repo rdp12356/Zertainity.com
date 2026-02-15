@@ -14,10 +14,17 @@ interface DataManagementProps {
     currentUserRole: string;
 }
 
+interface Institution {
+    id: string;
+    name: string;
+    location: string;
+    description?: string;
+}
+
 export const DataManagement = ({ currentUserRole }: DataManagementProps) => {
     const { toast } = useToast();
-    const [colleges, setColleges] = useState<any[]>([]);
-    const [schools, setSchools] = useState<any[]>([]);
+    const [colleges, setColleges] = useState<Institution[]>([]);
+    const [schools, setSchools] = useState<Institution[]>([]);
     const [loading, setLoading] = useState(false);
 
     // Form States
@@ -49,8 +56,9 @@ export const DataManagement = ({ currentUserRole }: DataManagementProps) => {
             toast({ title: "Success", description: "College added" });
             setNewCollege({ name: "", location: "", description: "" });
             fetchData();
-        } catch (e: any) {
-            toast({ title: "Error", description: e.message, variant: "destructive" });
+        } catch (e: unknown) {
+            const message = e instanceof Error ? e.message : "An error occurred";
+            toast({ title: "Error", description: message, variant: "destructive" });
         }
     };
 
@@ -62,8 +70,9 @@ export const DataManagement = ({ currentUserRole }: DataManagementProps) => {
             toast({ title: "Success", description: "School added" });
             setNewSchool({ name: "", location: "", description: "" });
             fetchData();
-        } catch (e: any) {
-            toast({ title: "Error", description: e.message, variant: "destructive" });
+        } catch (e: unknown) {
+            const message = e instanceof Error ? e.message : "An error occurred";
+            toast({ title: "Error", description: message, variant: "destructive" });
         }
     };
 
@@ -77,8 +86,9 @@ export const DataManagement = ({ currentUserRole }: DataManagementProps) => {
             if (error) throw error;
             toast({ title: "Deleted", description: "Entry removed successfully." });
             fetchData();
-        } catch (e: any) {
-            toast({ title: "Error", description: e.message, variant: "destructive" });
+        } catch (e: unknown) {
+            const message = e instanceof Error ? e.message : "An error occurred";
+            toast({ title: "Error", description: message, variant: "destructive" });
         }
     };
 

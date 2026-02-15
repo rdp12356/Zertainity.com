@@ -1,0 +1,122 @@
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\AuditLogViewer.tsx[24m[0m
+[0m  [2m16:14[22m  [31merror[39m    Unexpected any. Specify a different type                                                                      [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m38:25[22m  [31merror[39m    Unexpected any. Specify a different type                                                                      [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m51:8[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'fetchLogs'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\CSVImport.tsx[24m[0m
+[0m   [2m30:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m118:25[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m139:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\CSVImportExport.tsx[24m[0m
+[0m   [2m24:53[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m38:25[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m111:33[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m123:25[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\DataManagement.tsx[24m[0m
+[0m  [2m19:46[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m20:44[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m52:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m65:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m80:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\InviteUserDialog.tsx[24m[0m
+[0m  [2m66:25[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\PermissionsManager.tsx[24m[0m
+[0m   [2m48:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'fetchPermissions'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m   [2m72:21[22m  [31merror[39m    Unexpected any. Specify a different type                                                                             [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m104:11[22m  [31merror[39m    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  [2m@typescript-eslint/ban-ts-comment[22m[0m
+[0m  [2m106:11[22m  [31merror[39m    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  [2m@typescript-eslint/ban-ts-comment[22m[0m
+[0m  [2m118:11[22m  [31merror[39m    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  [2m@typescript-eslint/ban-ts-comment[22m[0m
+[0m  [2m133:21[22m  [31merror[39m    Unexpected any. Specify a different type                                                                             [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\SystemSettings.tsx[24m[0m
+[0m  [2m26:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m31:38[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m45:35[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m58:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\UserManagement.tsx[24m[0m
+[0m   [2m42:25[22m  [31merror[39m    Unexpected any. Specify a different type                                                                       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m55:8[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m   [2m70:25[22m  [31merror[39m    Unexpected any. Specify a different type                                                                       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m111:25[22m  [31merror[39m    Unexpected any. Specify a different type                                                                       [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\admin\UserProfileCard.tsx[24m[0m
+[0m  [2m58:6[22m  [33mwarning[39m  React Hook useEffect has a missing dependency: 'fetchProfile'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\badge.tsx[24m[0m
+[0m  [2m29:17[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\button.tsx[24m[0m
+[0m  [2m49:18[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\command.tsx[24m[0m
+[0m  [2m24:11[22m  [31merror[39m  An interface declaring no members is equivalent to its supertype  [2m@typescript-eslint/no-empty-object-type[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\form.tsx[24m[0m
+[0m  [2m129:10[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\navigation-menu.tsx[24m[0m
+[0m  [2m111:3[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\sidebar.tsx[24m[0m
+[0m  [2m636:3[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\sonner.tsx[24m[0m
+[0m  [2m27:19[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\textarea.tsx[24m[0m
+[0m  [2m5:18[22m  [31merror[39m  An interface declaring no members is equivalent to its supertype  [2m@typescript-eslint/no-empty-object-type[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\components\ui\toggle.tsx[24m[0m
+[0m  [2m37:18[22m  [33mwarning[39m  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  [2mreact-refresh/only-export-components[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\hooks\usePermission.tsx[24m[0m
+[0m  [2m16:6[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'checkPermission'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m64:49[22m  [31merror[39m    Unexpected any. Specify a different type                                                                            [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\lib\csv-utils.ts[24m[0m
+[0m  [2m17:53[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m39:32[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m49:24[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\lib\permissions.ts[24m[0m
+[0m  [2m85:76[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\pages\auth\Auth.tsx[24m[0m
+[0m  [2m49:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m65:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\pages\career\CareerContentEditor.tsx[24m[0m
+[0m  [2m339:106[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\pages\career\JobPortal.tsx[24m[0m
+[0m   [2m44:8[22m   [33mwarning[39m  React Hook useEffect has a missing dependency: 'currentPage'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m  [2m100:32[22m  [31merror[39m    Unexpected any. Specify a different type                                                                        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\pages\career\Quiz.tsx[24m[0m
+[0m  [2m227:6[22m  [33mwarning[39m  React Hook useEffect has missing dependencies: 'handleNext' and 'handleSubmit'. Either include them or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\pages\profile\Profile.tsx[24m[0m
+[0m  [2m92:25[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\services\ai.ts[24m[0m
+[0m   [2m41:39[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m   [2m45:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m172:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m191:39[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m195:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\johan\Documents\Zertainity.com\src\services\careerService.ts[24m[0m
+[0m  [2m26:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m36:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m47:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m58:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m70:37[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[31m[1m✖ 63 problems (49 errors, 14 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

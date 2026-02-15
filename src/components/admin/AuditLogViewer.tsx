@@ -13,7 +13,7 @@ interface AuditLog {
     id: string;
     user_id: string;
     action: string;
-    details: any;
+    details: Record<string, unknown> | null;
     created_at: string;
 }
 
@@ -35,10 +35,11 @@ export const AuditLogViewer = () => {
 
             if (error) throw error;
             setLogs(data || []);
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
             toast({
                 title: "Error fetching audit logs",
-                description: error.message,
+                description: errorMessage,
                 variant: "destructive",
             });
         } finally {
@@ -48,6 +49,7 @@ export const AuditLogViewer = () => {
 
     useEffect(() => {
         fetchLogs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleExport = () => {

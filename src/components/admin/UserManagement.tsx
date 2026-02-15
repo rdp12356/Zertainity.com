@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -32,27 +32,28 @@ export const UserManagement = ({ currentUserRole }: UserManagementProps) => {
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         setLoading(true);
         try {
             const { data, error } = await supabase.rpc('get_all_users_with_roles');
 
             if (error) throw error;
             setUsers(data || []);
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Failed to fetch users";
             toast({
                 title: "Error fetching users",
-                description: error.message,
+                description: message,
                 variant: "destructive",
             });
         } finally {
             setLoading(false);
         }
-    };
+    }, [toast]);
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [fetchUsers]);
 
     const handleRoleUpdate = async (userId: string, newRole: AppRole) => {
         try {
@@ -67,10 +68,11 @@ export const UserManagement = ({ currentUserRole }: UserManagementProps) => {
 
             toast({ title: "Role Updated", description: "User role changed successfully." });
             fetchUsers();
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Failed to update role";
             toast({
                 title: "Error",
-                description: error.message,
+                description: message,
                 variant: "destructive",
             });
         }
@@ -108,8 +110,9 @@ export const UserManagement = ({ currentUserRole }: UserManagementProps) => {
             }
 
             fetchUsers();
-        } catch (error: any) {
-            toast({ title: "Error", description: error.message, variant: "destructive" });
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Failed to update suspension status";
+            toast({ title: "Error", description: message, variant: "destructive" });
         }
     };
 

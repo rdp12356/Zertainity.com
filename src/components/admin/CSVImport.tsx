@@ -24,17 +24,17 @@ export function CSVImport({ onImportComplete }: { onImportComplete: () => void }
   const parseCSV = (text: string): CSVUser[] => {
     const lines = text.trim().split('\n');
     const headers = lines[0].split(',').map(h => h.trim());
-    
+
     return lines.slice(1).map(line => {
       const values = line.split(',').map(v => v.trim());
-      const user: any = {};
-      
+      const user: Record<string, string> = {};
+
       headers.forEach((header, index) => {
         if (values[index]) {
           user[header] = values[index];
         }
       });
-      
+
       return user as CSVUser;
     }).filter(user => user.email); // Filter out empty rows
   };
@@ -94,8 +94,8 @@ export function CSVImport({ onImportComplete }: { onImportComplete: () => void }
 
           // Invite user
           const { error: inviteError } = await supabase.functions.invoke('invite-user', {
-            body: { 
-              email: user.email, 
+            body: {
+              email: user.email,
               role: user.role || 'user',
               profileData: {
                 avatar_url: user.avatar_url,
@@ -115,8 +115,9 @@ export function CSVImport({ onImportComplete }: { onImportComplete: () => void }
 
           // Add small delay to avoid rate limiting
           await new Promise(resolve => setTimeout(resolve, 500));
-        } catch (error: any) {
-          errors.push(`Error processing ${user.email}: ${error.message}`);
+        } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : "Unknown error";
+          errors.push(`Error processing ${user.email}: ${errorMessage}`);
           failedCount++;
         }
       }
@@ -136,10 +137,11 @@ export function CSVImport({ onImportComplete }: { onImportComplete: () => void }
           variant: "destructive",
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to process CSV file";
       toast({
         title: "Error",
-        description: error.message || "Failed to process CSV file",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {

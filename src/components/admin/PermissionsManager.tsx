@@ -44,41 +44,42 @@ export function PermissionsManager({ isOwner }: { isOwner: boolean }) {
   const [updating, setUpdating] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchPermissions = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("role_permissions")
+          .select("*")
+          .order("role");
+
+        if (error) throw error;
+
+        setPermissions(data || []);
+
+        const perms: RolePermissions = {};
+        roles.forEach(role => {
+          perms[role] = new Set();
+        });
+
+        data?.forEach((perm) => {
+          if (!perms[perm.role]) perms[perm.role] = new Set();
+          perms[perm.role].add(perm.permission);
+        });
+
+        setRolePermissions(perms);
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Failed to load permissions";
+        toast({
+          title: "Error",
+          description: message,
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPermissions();
-  }, []);
-
-  const fetchPermissions = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("role_permissions")
-        .select("*")
-        .order("role");
-
-      if (error) throw error;
-
-      setPermissions(data || []);
-      
-      const perms: RolePermissions = {};
-      roles.forEach(role => {
-        perms[role] = new Set();
-      });
-      
-      data?.forEach((perm) => {
-        if (!perms[perm.role]) perms[perm.role] = new Set();
-        perms[perm.role].add(perm.permission);
-      });
-      
-      setRolePermissions(perms);
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: "Failed to load permissions",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [toast]);
 
   const handleTogglePermission = async (role: string, permission: string) => {
     if (!isOwner) {
@@ -101,9 +102,9 @@ export function PermissionsManager({ isOwner }: { isOwner: boolean }) {
         const { error } = await supabase
           .from("role_permissions")
           .delete()
-          // @ts-ignore - Supabase types will sync
+          // @ts-expect-error - Supabase types will sync
           .eq("role", role)
-          // @ts-ignore - Supabase types will sync
+          // @ts-expect-error - Supabase types will sync
           .eq("permission", permission);
 
         if (error) throw error;
@@ -115,7 +116,7 @@ export function PermissionsManager({ isOwner }: { isOwner: boolean }) {
         // Add permission
         const { error } = await supabase
           .from("role_permissions")
-          // @ts-ignore - Supabase types will sync
+          // @ts-expect-error - Supabase types will sync
           .insert({ role, permission });
 
         if (error) throw error;
@@ -130,10 +131,11 @@ export function PermissionsManager({ isOwner }: { isOwner: boolean }) {
         title: "Success",
         description: `Permission ${hasPermission ? 'removed from' : 'added to'} ${role}`,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "An error occurred";
       toast({
         title: "Error",
-        description: error.message,
+        description: message,
         variant: "destructive",
       });
     } finally {
@@ -183,7 +185,7 @@ export function PermissionsManager({ isOwner }: { isOwner: boolean }) {
                   {roles.map((role) => {
                     const hasPermission = rolePermissions[role]?.has(permission) || false;
                     const isUpdatingThis = updating === `${role}-${permission}`;
-                    
+
                     return (
                       <TableCell key={role} className="text-center">
                         <div className="flex justify-center">

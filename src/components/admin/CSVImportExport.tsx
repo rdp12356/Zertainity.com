@@ -21,7 +21,7 @@ export const CSVImportExport = () => {
 
             if (error) throw error;
 
-            const csvData = (data || []).map((user: any) => ({
+            const csvData = (data || []).map((user: { email: string; role: string; created_at: string; is_suspended: boolean }) => ({
                 email: user.email,
                 role: user.role,
                 created_at: new Date(user.created_at).toLocaleDateString(),
@@ -35,10 +35,11 @@ export const CSVImportExport = () => {
                 title: "Export Complete",
                 description: `Exported ${csvData.length} users to CSV`,
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : "Export failed";
             toast({
                 title: "Export Failed",
-                description: error.message,
+                description: errorMessage,
                 variant: "destructive",
             });
         } finally {
@@ -108,8 +109,9 @@ export const CSVImportExport = () => {
                     });
 
                     successCount++;
-                } catch (error: any) {
-                    errors.push(`Row ${i + 2}: ${error.message}`);
+                } catch (error: unknown) {
+                    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+                    errors.push(`Row ${i + 2}: ${errorMessage}`);
                 }
             }
 
@@ -120,10 +122,11 @@ export const CSVImportExport = () => {
                 description: `Successfully imported ${successCount} users. ${errors.length} errors.`,
                 variant: errors.length > 0 ? "destructive" : "default",
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : "Import failed";
             toast({
                 title: "Import Failed",
-                description: error.message,
+                description: errorMessage,
                 variant: "destructive",
             });
         } finally {

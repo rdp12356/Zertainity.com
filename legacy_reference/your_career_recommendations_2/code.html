@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zertainity - Career Recommendations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f172a", 
+                        "background-light": "#f8fafc",
+                        "background-dark": "#020617",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }.custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col font-display">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md px-6 py-3 lg:px-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 text-primary dark:text-white">
+<span class="material-symbols-outlined text-3xl">token</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">Zertainity</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors text-sm font-medium" href="#">Dashboard</a>
+<a class="text-primary dark:text-white font-semibold text-sm leading-normal" href="#">Assessment</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors text-sm font-medium" href="#">Careers</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors text-sm font-medium" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full rounded-lg border-none bg-slate-100 dark:bg-slate-900 py-2 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder-slate-500 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search careers..." type="text"/>
+</div>
+<button class="relative rounded-full size-10 overflow-hidden ring-2 ring-slate-100 dark:ring-slate-800 transition-all hover:ring-primary/50">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="User profile picture of a young professional woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2eBUgLgkbtj2OpbogJJg7SJM3oHM_mMewhNZJIDKMQMOEbbEQl7kHpNuoDhVCOrp8y4F-nqbHf_suGaaCE1cgmK9JXGiLWpo3AHtH0GpAAfAyqKwUJA4V_fhJW-uEMVsPzilFa8pUO74sdZN5O4CpicjWxto_e_6b8KB1xL4q695HIKwuOvF_xM5Pu1hIMmDDEgejuXhqFI06rp9ISOUm5ypI7XUG-VBW0jqF04aEBwfss3Ijg4zy2S3NiogJd_jqSJ3rD5D1YA"/>
+</button>
+</div>
+</header>
+<div class="flex flex-1 max-w-[1440px] mx-auto w-full">
+<aside class="hidden lg:block w-72 shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 p-6 h-[calc(100vh-65px)] sticky top-[65px] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">Filters</h3>
+<button class="text-xs font-medium text-slate-900 dark:text-white hover:text-slate-600">Reset All</button>
+</div>
+<div class="mb-8">
+<h4 class="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-slate-400">domain</span>
+                Industry
+            </h4>
+<div class="space-y-2.5">
+<label class="flex items-center group cursor-pointer">
+<input checked="" class="rounded border-slate-300 text-slate-900 focus:ring-slate-900/20 transition-colors" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Technology</span>
+<span class="ml-auto text-xs text-slate-400">12</span>
+</label>
+<label class="flex items-center group cursor-pointer">
+<input class="rounded border-slate-300 text-slate-900 focus:ring-slate-900/20 transition-colors" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Healthcare</span>
+<span class="ml-auto text-xs text-slate-400">5</span>
+</label>
+<label class="flex items-center group cursor-pointer">
+<input class="rounded border-slate-300 text-slate-900 focus:ring-slate-900/20 transition-colors" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Finance</span>
+<span class="ml-auto text-xs text-slate-400">8</span>
+</label>
+<label class="flex items-center group cursor-pointer">
+<input class="rounded border-slate-300 text-slate-900 focus:ring-slate-900/20 transition-colors" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Creative Arts</span>
+<span class="ml-auto text-xs text-slate-400">4</span>
+</label>
+<label class="flex items-center group cursor-pointer">
+<input class="rounded border-slate-300 text-slate-900 focus:ring-slate-900/20 transition-colors" type="checkbox"/>
+<span class="ml-3 text-sm text-slate-600 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Education</span>
+<span class="ml-auto text-xs text-slate-400">3</span>
+</label>
+</div>
+</div>
+<div class="mb-8">
+<h4 class="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-slate-400">attach_money</span>
+                Salary Range
+            </h4>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-2.5 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer hover:border-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all bg-white dark:bg-slate-900/50">
+<input class="h-4 w-4 border-slate-300 text-slate-900 focus:ring-slate-900/20" name="salary" type="radio"/>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">$50k - $80k</span>
+<span class="text-xs text-slate-500">Entry Level</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-2.5 border border-slate-900 bg-slate-50 dark:bg-slate-800 rounded-lg cursor-pointer transition-all">
+<input checked="" class="h-4 w-4 border-slate-300 text-slate-900 focus:ring-slate-900/20" name="salary" type="radio"/>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">$80k - $120k</span>
+<span class="text-xs text-slate-500">Mid Level</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-2.5 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer hover:border-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all bg-white dark:bg-slate-900/50">
+<input class="h-4 w-4 border-slate-300 text-slate-900 focus:ring-slate-900/20" name="salary" type="radio"/>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-900 dark:text-white">$120k+</span>
+<span class="text-xs text-slate-500">Senior Level</span>
+</div>
+</label>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-medium text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-slate-400">school</span>
+                Experience
+            </h4>
+<select class="w-full rounded-lg border-slate-300 bg-white dark:bg-slate-900 text-sm text-slate-700 dark:text-slate-200 focus:border-slate-900 focus:ring-slate-900/20">
+<option>Any Experience</option>
+<option>Internship</option>
+<option>Entry Level</option>
+<option>Associate</option>
+<option>Senior</option>
+</select>
+</div>
+</aside>
+<main class="flex-1 px-6 py-8 lg:px-10 overflow-x-hidden">
+<div class="mb-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
+<div class="max-w-2xl">
+<h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-3">
+                        Great job, Alex! Here are your top matches.
+                    </h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                        Based on your unique profile, we've identified <span class="font-semibold text-slate-900 dark:text-white underline decoration-2 decoration-slate-300 dark:decoration-slate-600 underline-offset-4">12 careers</span> that align with your strengths in creative thinking and autonomy.
+                    </p>
+</div>
+</div>
+<div class="flex flex-wrap gap-3">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full shadow-subtle">
+<span class="material-symbols-outlined text-[18px] text-slate-700 dark:text-slate-300">lightbulb</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Creative Thinker</span>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full shadow-subtle">
+<span class="material-symbols-outlined text-[18px] text-slate-700 dark:text-slate-300">person</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">High Autonomy</span>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full shadow-subtle">
+<span class="material-symbols-outlined text-[18px] text-slate-700 dark:text-slate-300">computer</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Tech Sector</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-800 dark:bg-slate-200"></div>
+<div class="p-6 flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">design_services</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+<span class="text-xs font-bold">98% Match</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Product Designer</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 flex-grow line-clamp-3">
+                        Use your empathy and problem-solving skills to design user-centric interfaces. Perfect for those who love blending aesthetics with functionality.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$95k avg</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+<span>High Growth</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-4 rounded-lg transition-all duration-200 group/btn">
+                            Explore Career
+                            <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-600 dark:bg-slate-400"></div>
+<div class="p-6 flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">code</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+<span class="text-xs font-bold">95% Match</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Frontend Developer</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 flex-grow line-clamp-3">
+                        Build the visual elements of websites that users interact with. A great fit for logical thinkers with a creative eye.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$105k avg</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">home_work</span>
+<span>Remote</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-4 rounded-lg transition-all duration-200 group/btn">
+                            Explore Career
+                            <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-500 dark:bg-slate-500"></div>
+<div class="p-6 flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">search_insights</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+<span class="text-xs font-bold">92% Match</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">UX Researcher</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 flex-grow line-clamp-3">
+                        Understand user behaviors, needs, and motivations through observation techniques and feedback methodologies.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$92k avg</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+<span>Analytical</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-4 rounded-lg transition-all duration-200 group/btn">
+                            Explore Career
+                            <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-400 dark:bg-slate-600"></div>
+<div class="p-6 flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">analytics</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+<span class="text-xs font-bold">88% Match</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Data Analyst</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 flex-grow line-clamp-3">
+                        Interpret data and turn it into information which can offer ways to improve a business, affecting business decisions.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$85k avg</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">bar_chart</span>
+<span>Data Heavy</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-4 rounded-lg transition-all duration-200 group/btn">
+                            Explore Career
+                            <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-300 dark:bg-slate-700"></div>
+<div class="p-6 flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">description</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+<span class="text-xs font-bold">85% Match</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Technical Writer</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 flex-grow line-clamp-3">
+                        Produce documentation that helps people understand and use a product or service. Requires strong communication skills.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$78k avg</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span>Writing</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-4 rounded-lg transition-all duration-200 group/btn">
+                            Explore Career
+                            <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<article class="group relative flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-800 dark:bg-slate-200"></div>
+<div class="p-6 flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">rocket_launch</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+<span class="text-xs font-bold">82% Match</span>
+</div>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Innovation Manager</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 flex-grow line-clamp-3">
+                        Drive change within an organization by identifying new opportunities and developing strategies to pursue them.
+                    </p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 text-xs font-medium text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$115k avg</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span>Leadership</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 font-medium py-2.5 px-4 rounded-lg transition-all duration-200 group/btn">
+                            Explore Career
+                            <span class="material-symbols-outlined text-[18px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<div class="mt-12 flex justify-center">
+<button class="flex items-center gap-2 px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-sm text-sm font-medium text-slate-600 dark:text-slate-300 hover:border-slate-900 hover:text-slate-900 dark:hover:text-white transition-all">
+                Show More Careers
+                <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+</div>
+</main>
+</div>
+
+</body></html>
