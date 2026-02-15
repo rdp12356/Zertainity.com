@@ -1,3 +1,4 @@
+import type {IGraphQLConfig} from 'graphql-config';
 import {getSchema} from '@shopify/hydrogen-codegen';
 
 /**
@@ -5,7 +6,7 @@ import {getSchema} from '@shopify/hydrogen-codegen';
  * @see https://the-guild.dev/graphql/config/docs/user/usage
  * @type {IGraphQLConfig}
  */
-const graphqlConfig = {
+const graphqlConfig: IGraphQLConfig = {
   projects: {
     default: {
       schema: getSchema('storefront'),
@@ -26,5 +27,3 @@ const graphqlConfig = {
 };
 
 export default graphqlConfig;
-
-/** @typedef {import('graphql-config').IGraphQLConfig} IGraphQLConfig */

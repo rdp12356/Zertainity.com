@@ -2,7 +2,9 @@ import RequiresAuth from "./components/RequiresAuth";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect } from "react";
+import { HashRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Index from "./pages/home/Index";
 // import EducationLevel from "./pages/education/EducationLevel"; // Removed in favor of EducationLevelSelect
 import Quiz from "./pages/career/Quiz";
@@ -43,7 +45,9 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Sonner />
-      <BrowserRouter>
+      <Sonner />
+      <HashRouter>
+        <AuthListener />
         <Routes>
           <Route path="/" element={<Index />} />
           {/* <Route path="/education-level" element={<EducationLevel />} /> Removed duplicate */}
@@ -84,9 +88,25 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </TooltipProvider>
   </QueryClientProvider>
+);
+
+const AuthListener = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        navigate("/profile");
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+  return null;
+};
+    </TooltipProvider >
+  </QueryClientProvider >
 );
 
 export default App;

@@ -1,3 +1,4 @@
+import type {Config} from '@react-router/dev/config';
 import {hydrogenPreset} from '@shopify/hydrogen/react-router-preset';
 
 /**
@@ -9,6 +10,4 @@ import {hydrogenPreset} from '@shopify/hydrogen/react-router-preset';
  */
 export default {
   presets: [hydrogenPreset()],
-};
-
-/** @typedef {import('@react-router/dev/config').Config} Config */
+} satisfies Config;
